@@ -1,73 +1,170 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Radency Hometask 3
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Run locally
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
+Clone the project
 
 ```bash
-$ npm install
+    git clone git@github.com:yegor-ts/task-3.git
 ```
 
-## Running the app
+Go to the project directory
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+    cd task-3
 ```
 
-## Test
+Install dependecies
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+    npm install
 ```
 
-## Support
+Run application
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+    npm start
+```
 
-## Stay in touch
+# Database
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+The application uses [PostgreSQL](https://www.postgresql.org/) and [TypeORM](https://typeorm.io/).
 
-## License
+Create a new PostgreSQL database with the name `radency` or the name you specified in the `.env` file.
 
-Nest is [MIT licensed](LICENSE).
+Create `.env` file in root directory and add following values:
+```
+DATABASE_HOST=
+DATABASE_PORT=
+DATABASE_USERNAME=
+DATABASE_PASSWORD=
+DATABASE_NAME=
+```
+
+When application starts, tables for all entities will be created.
+
+To load the data into the table run the following SQL query:
+```
+INSERT INTO note (id, name, category, content)
+     VALUES (3986481, 'Shopping List', 'Task', 'Tomatoes, bread'),
+            (1634932, 'The theory of evolution', 'Random Thought', 'The evolution...'),
+            (7773718, 'New Feature', 'Idea', 'Implement new feature'),
+            (3031717, 'William Gaddis', 'Quote', 'Power doesnt co...'),
+            (3231967, 'Books', 'Task', 'The Lean Startup'),
+            (3520139, 'Home Chores', 'Task', 'Clean my house and basement'),
+            (8857722, 'English Lessons', 'Task', 'Do my homework project and write essay');
+```
+
+# API Description
+
+## Get all notes
+
+Request
+
+`GET /notes/`
+
+Response
+
+```
+HTTP/1.1 200 OK
+Status: 200 OK
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Keep-Alive: timeout=5
+Content-length: 2015
+
+[]
+```
+
+## Get note by id
+
+Request
+
+`GET /notes/:id`
+
+Response
+
+```
+HTTP/1.1 200 OK
+Status: 200 OK
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Keep-Alive: timeout=5
+Content-length: 148
+
+{"id":3986481,"name":"Shopping List","created":"2022-09-25T11:36:27.875Z","category":"Task","content":"Tomatoes, bread","dates":"","archived":false}
+```
+
+## Create note
+
+Request
+
+`POST /notes/`
+
+Response
+
+```
+HTTP/1.1 201 Created
+Status: 201 Created
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Keep-Alive: timeout=5
+Content-length: 131
+
+{"name":"test","content":"test content","category":"Task","id":11,"created":"2022-09-25T15:32:39.269Z","dates":"","archived":false}
+```
+
+## Delete note by id
+
+Request
+
+`DELETE /notes/:id`
+
+Response
+
+```
+HTTP/1.1 200 OK
+Status: 200 OK
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Keep-Alive: timeout=5
+Content-length: 0
+```
+
+## Update note by id
+
+Request
+
+`PATCH /notes/:id`
+
+Response
+
+```
+HTTP/1.1 200 OK
+Status: 200 OK
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Keep-Alive: timeout=5
+Content-length: 147
+
+{"id":3986481,"name":"Shopping List","created":"2022-09-25T11:36:27.875Z","category":"Task","content":"Tomatoes, bread","dates":"","archived":true}
+```
+
+## Get notes stats
+
+Request
+
+`GET /notes/stats`
+
+Response
+
+```
+HTTP/1.1 200 OK
+Status: 200 OK
+Connection: keep-alive
+Content-Type: application/json; charset=utf-8
+Keep-Alive: timeout=5
+Content-length: 144
+
+{"Task":{"active":7,"archived":4},"Random Thought":{"active":1,"archived":0},"Idea":{"active":1,"archived":0},"Quote":{"active":1,"archived":0}}
+```

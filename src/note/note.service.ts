@@ -12,6 +12,37 @@ export class NoteService {
     private readonly noteRepository: Repository<NoteEntity>,
   ) {}
 
+  async findStats() {
+    const stats = {
+      ['Task']: {
+        active: 0,
+        archived: 0,
+      },
+      ['Random Thought']: {
+        active: 0,
+        archived: 0,
+      },
+      ['Idea']: {
+        active: 0,
+        archived: 0,
+      },
+      ['Quote']: {
+        active: 0,
+        archived: 0,
+      },
+    };
+
+    const notes = await this.noteRepository.find();
+
+    for (const note of notes) {
+      note.archived === false
+        ? stats[note.category].active++
+        : stats[note.category].archived++;
+    }
+
+    return stats;
+  }
+
   create(noteData: CreateNoteDto): Promise<NoteEntity> {
     return this.noteRepository.save(noteData);
   }

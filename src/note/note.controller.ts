@@ -17,6 +17,11 @@ import { NOTE_NOT_FOUND } from './note.constants';
 export class NoteController {
   constructor(private readonly noteService: NoteService) {}
 
+  @Get('stats')
+  findStats() {
+    return this.noteService.findStats();
+  }
+
   @Post()
   create(@Body() noteData: CreateNoteDto) {
     return this.noteService.create(noteData);

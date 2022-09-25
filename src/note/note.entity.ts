@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-enum Category {
+export enum Category {
   TASK = 'Task',
   RANDOM_THOUGHT = 'Random Thought',
   IDEA = 'Idea',
@@ -36,7 +36,7 @@ export class NoteEntity {
   @Column()
   content: string;
 
-  @Column()
+  @Column({ default: '' })
   dates: string;
 
   @Column({ default: false })
